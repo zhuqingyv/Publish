@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 15:55:56
- * @LastEditTime: 2020-08-24 17:26:45
+ * @LastEditTime: 2020-08-26 17:43:28
  * @LastEditors: zhuqingyu
  * git目录下所有项目的json集合，用于处理json
  */
@@ -34,13 +34,14 @@ const publishJson = {
           newPublich_path,
           JSON.stringify(publishJson)
         );
+        console.log("newPublish", newPublish);
         resolve(newPublish);
       } catch (e) {
         reject(e);
       }
     });
   },
-  // 删除一条
+  // 删除
   delete(data) {
     const $this = this;
     return new Promise((resolve, reject) => {
@@ -92,7 +93,7 @@ const publishJson = {
     return path.resolve(__dirname, "../../../git/publish.json");
   },
 };
-module.exports = function(fileReader) {
+module.exports = function (fileReader) {
   publishJson.fileReader = fileReader;
   return publishJson;
 };

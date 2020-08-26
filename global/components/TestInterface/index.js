@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 22:45:09
- * @LastEditTime: 2020-08-24 23:00:22
+ * @LastEditTime: 2020-08-26 20:20:32
  * @LastEditors: zhuqingyu
  */
 
@@ -12,6 +12,8 @@ module.exports = function testInterface(option, request) {
         // 检查 Methods
         if (key === 'method') {
             request.method.toLocaleUpperCase() === option.method.toLocaleUpperCase()
+        } else if (key === 'body') {
+            continue
         } else if (typeof option[key] === 'object') {
             testInterface(option[key], request[key])
         } else if (option[key] !== request[key]) {

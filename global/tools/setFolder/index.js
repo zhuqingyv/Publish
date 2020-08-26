@@ -1,13 +1,14 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:55:02
- * @LastEditTime: 2020-08-24 17:16:42
+ * @LastEditTime: 2020-08-26 21:20:09
  * @LastEditors: zhuqingyu
  */
 const fs = require("fs")
+const fsExtra = require('fs-extra')
 const gotoFolder = require('./gotoFolder.js')
 
-module.exports.setFolder = {
+module.exports = {
     gotoFolder,
 
     // 查找文件夹是否存在, 并返回文件夹内文件信息
@@ -32,7 +33,7 @@ module.exports.setFolder = {
     delete(path) {
         return new Promise((resolve, reject) => {
             try {
-                fs.rmdirSync(path)
+                fsExtra.removeSync(path)
                 resolve(true, path)
             } catch (err) {
                 reject(err)

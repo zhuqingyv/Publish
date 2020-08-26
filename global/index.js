@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:59:33
- * @LastEditTime: 2020-08-25 11:15:14
+ * @LastEditTime: 2020-08-26 19:47:21
  * @LastEditors: zhuqingyu
  */
 // 工具
@@ -14,6 +14,9 @@ const publishJson = require('./components/PublishJson/index.js');
 const testInterface = require('./components/TestInterface/index.js');
 const contentType = require('./components/contentType/index.js');
 const getBody = require('./components/getBody/index.js');
+const testOption = require('./components/testOption/index.js');
+const allowHeader = require('./components/allowHeader/index.js');
+const jsonManager = require('./components/jsonManager/index.js');
 
 module.exports = {
     components: {
@@ -24,7 +27,13 @@ module.exports = {
         // 分配相应的 content-type
         contentType,
         // 获取到请求 body
-        getBody
+        getBody,
+        // 处理复杂请求直接返回
+        testOption,
+        // 设置 跨域等
+        allowHeader,
+        // json管理
+        jsonManager
     },
     tools: {
         // 文件读取

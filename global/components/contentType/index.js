@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 23:09:26
- * @LastEditTime: 2020-08-25 00:22:38
+ * @LastEditTime: 2020-08-26 17:08:44
  * @LastEditors: zhuqingyu
  */
 const static = {
@@ -58,11 +58,11 @@ const contentType = function (url) {
     if (type === '.ico' || type === 'png') debugger
     return {
         get value() {
-            return static[type] || defaultType
+            return static[type] || defaultType // content-type
         },
-        format: type,
-        url,
-        ifMedia: ifMedia(type)
+        format: type, // 请求资源的扩展名
+        url, // 完整地址
+        ifMedia: ifMedia(type) // 是否是媒体文件
     }
 }
 module.exports = contentType

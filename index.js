@@ -1,11 +1,12 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:54
- * @LastEditTime: 2020-08-26 13:52:39
+ * @LastEditTime: 2020-08-26 22:26:30
  * @LastEditors: zhuqingyu
  */
 // 将全局应用 挂载在全局
-global._global = require("./global/index.js");
+global.PATH = require("./PATH/index.js"); // 通用目录
+global._global = require("./global/index.js"); // 全局工具
 
 // 服务启动程序
 const server = require("./server/server.js");
@@ -19,9 +20,9 @@ const _git = require("./git/index.js");
  */
 global._global.tools.getPort(80).then((port) => {
   server.init(port).then(e => {
-    _git.clone("https://github.com/zhuqingyv/canvasGo.git", "canvas_Go").then((json, publishJson) => {
-      console.log(json, publishJson);
-    })
+    // _git.clone("https://github.com/zhuqingyv/canvasGo.git", "canvas_Go").then((json, publishJson) => {
+    //   console.log(json, publishJson);
+    // })
   });
 });
 // _git
