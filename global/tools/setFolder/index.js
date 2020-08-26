@@ -1,10 +1,11 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:55:02
- * @LastEditTime: 2020-08-26 20:26:57
+ * @LastEditTime: 2020-08-26 21:20:09
  * @LastEditors: zhuqingyu
  */
 const fs = require("fs")
+const fsExtra = require('fs-extra')
 const gotoFolder = require('./gotoFolder.js')
 
 module.exports = {
@@ -32,7 +33,7 @@ module.exports = {
     delete(path) {
         return new Promise((resolve, reject) => {
             try {
-                fs.rmdirSync(path)
+                fsExtra.removeSync(path)
                 resolve(true, path)
             } catch (err) {
                 reject(err)

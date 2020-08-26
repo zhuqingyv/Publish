@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-26 18:00:11
- * @LastEditTime: 2020-08-26 20:16:50
+ * @LastEditTime: 2020-08-26 22:09:57
  * @LastEditors: zhuqingyu
  */
 const fs = require("fs");
@@ -37,7 +37,7 @@ const deepProxy = function (_json, _path, callback, root) {
         },
         deleteProperty(target, key) {
             Reflect.deleteProperty(target, key)
-            return callback(null, path, JSON.stringify(root))
+            return callback(path, JSON.stringify(root))
         }
     })
 }
