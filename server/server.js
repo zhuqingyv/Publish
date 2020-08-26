@@ -1,11 +1,12 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:48
- * @LastEditTime: 2020-08-26 13:51:10
+ * @LastEditTime: 2020-08-26 17:07:26
  * @LastEditors: zhuqingyu
  */
 const http = require("http");
 const interface = require("./interface/index.js");
+const testInterface = global._global.components.testInterface
 
 const server = {
     _server: null,
@@ -29,7 +30,8 @@ const server = {
         const hash = this.hash(request.url);
         const host = request.headers.host;
         try {
-            if (hash.api) {
+            // 当存在接口，并且接口符合标准
+            if (hash.api && testInterface(hash.option, request)) {
                 interface.callback[hash.api](hash.option, request, response)
             } else {
                 response.statusCode = 404;

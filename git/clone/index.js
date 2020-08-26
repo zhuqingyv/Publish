@@ -1,14 +1,14 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:36:56
- * @LastEditTime: 2020-08-24 17:42:07
+ * @LastEditTime: 2020-08-26 14:26:17
  * @LastEditors: zhuqingyu
  */
 const exec = require("child_process").exec;
 const path = require("path");
 const initGit = require("./init.js");
 
-module.exports = function(gitHttps, _name) {
+module.exports = function (gitHttps, _name) {
   return new Promise((resolve, reject) => {
     initGit(_name)
       .then((id, init_stdout, init_stderr) => {
@@ -22,7 +22,7 @@ module.exports = function(gitHttps, _name) {
         };
 
         const command = `cd ./git/github/${id} && git clone ${gitHttps}`;
-        exec(command, function(error, clone_stdout, clone_stderr) {
+        exec(command, function (error, clone_stdout, clone_stderr) {
           if (error) {
             reject(error);
             return;
@@ -47,17 +47,13 @@ module.exports = function(gitHttps, _name) {
             );
             json.version = packageInfo.version; // 版本
             json.description = packageInfo.description; // 描述
-
+            json.url = gitHttps;
             // 修改 publishJson
             global._global.components.publishJson
               .add(json)
               .then((publishJson) => {
-                resolve(
-                  JSON.parse(packageInfo),
-                  publishJson,
-                  clone_stdout,
-                  clone_stderr
-                );
+                console.log();
+                resolve(publishJson, clone_stdout, clone_stderr);
               });
           } catch (err) {
             reject(err);

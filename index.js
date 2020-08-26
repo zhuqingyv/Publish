@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:54
- * @LastEditTime: 2020-08-26 13:52:39
+ * @LastEditTime: 2020-08-26 14:42:15
  * @LastEditors: zhuqingyu
  */
 // 将全局应用 挂载在全局
@@ -19,9 +19,9 @@ const _git = require("./git/index.js");
  */
 global._global.tools.getPort(80).then((port) => {
   server.init(port).then(e => {
-    _git.clone("https://github.com/zhuqingyv/canvasGo.git", "canvas_Go").then((json, publishJson) => {
-      console.log(json, publishJson);
-    })
+    // _git.clone("https://github.com/zhuqingyv/canvasGo.git", "canvas_Go").then((json, publishJson) => {
+    //   console.log(json, publishJson);
+    // })
   });
 });
 // _git
