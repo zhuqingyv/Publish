@@ -1,11 +1,11 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 22:45:09
- * @LastEditTime: 2020-08-26 20:20:32
+ * @LastEditTime: 2020-08-27 13:57:03
  * @LastEditors: zhuqingyu
  */
 
-module.exports = function testInterface(option, request) {
+module.exports = function testInterface(option = {}, request) {
     let options = Object.keys(option)
     for (let i = 0; i < options.length; i++) {
         let key = options[i]

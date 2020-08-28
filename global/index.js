@@ -1,13 +1,15 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:59:33
- * @LastEditTime: 2020-08-26 19:47:21
+ * @LastEditTime: 2020-08-27 19:15:06
  * @LastEditors: zhuqingyu
  */
 // 工具
-const setFolder = require('./tools/setFolder/index.js')
-const fileReader = require('./tools/fileReader/index.js')
-const getPort = require('./tools/getPort/index.js')
+const setFolder = require('./tools/setFolder/index.js');
+const fileReader = require('./tools/fileReader/index.js');
+const getPort = require('./tools/getPort/index.js');
+const StringToBuffer = require('./tools/stringToBuffer/index.js');
+const crypto = require('./tools/crypto/index.js');
 
 // 组件
 const publishJson = require('./components/PublishJson/index.js');
@@ -17,6 +19,7 @@ const getBody = require('./components/getBody/index.js');
 const testOption = require('./components/testOption/index.js');
 const allowHeader = require('./components/allowHeader/index.js');
 const jsonManager = require('./components/jsonManager/index.js');
+const testToken = require('./components/testToken/index.js');
 
 module.exports = {
     components: {
@@ -33,7 +36,9 @@ module.exports = {
         // 设置 跨域等
         allowHeader,
         // json管理
-        jsonManager
+        jsonManager,
+        // 测试 token 是否合法
+        testToken
     },
     tools: {
         // 文件读取
@@ -41,6 +46,10 @@ module.exports = {
         // 操作到文件夹
         setFolder,
         // 获取可用端口
-        getPort
+        getPort,
+        // 字符串转 Buffer
+        StringToBuffer,
+        // 加密模块
+        crypto
     }
 }

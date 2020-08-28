@@ -1,14 +1,15 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:36:56
- * @LastEditTime: 2020-08-27 01:12:23
+ * @LastEditTime: 2020-08-28 15:56:34
  * @LastEditors: zhuqingyu
  */
 const exec = require("child_process").exec;
 const path = require("path");
 const initGit = require("./init.js");
 
-module.exports = function (gitHttps, _name) {
+module.exports = function (gitHttps, _name, _userToken) {
+  const userName = _userToken.name;
   return new Promise((resolve, reject) => {
     initGit(_name)
       .then((id, init_stdout, init_stderr) => {
@@ -54,9 +55,23 @@ module.exports = function (gitHttps, _name) {
             global._global.components.publishJson
               .add(json)
               .then((publishJson) => {
-                console.log();
-                console.log(`同步publishJson成功！`);
-                resolve(publishJson, clone_stdout, clone_stderr);
+                const userData = JSON.parse(
+                  global._global.tools.fileReader.getJson(
+                    PATH.USERDATA_PATH,
+                    "utf8"
+                  )
+                );
+                const projects = [];
+                publishJson = JSON.parse(publishJson);
+                userData.userPool[userName].projects.push(json.id);
+                global._global.tools.fileReader.setJson(
+                  PATH.USERDATA_PATH,
+                  JSON.stringify(userData)
+                );
+                userData.userPool[userName].projects.forEach((projectID) => {
+                  projects.push(publishJson.projects[projectID]);
+                });
+                resolve(JSON.stringify(projects), clone_stdout, clone_stderr);
               });
           } catch (err) {
             reject(err);
