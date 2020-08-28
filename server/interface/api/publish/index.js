@@ -1,10 +1,13 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:17:03
- * @LastEditTime: 2020-08-26 17:19:14
+ * @LastEditTime: 2020-08-27 13:58:25
  * @LastEditors: zhuqingyu
  */
 const publish = {
+    '/': {
+        option: {}
+    },
     'login': {
         option: {
             method: 'POST',

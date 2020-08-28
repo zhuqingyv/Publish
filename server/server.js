@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:48
- * @LastEditTime: 2020-08-26 17:07:26
+ * @LastEditTime: 2020-08-27 18:09:29
  * @LastEditors: zhuqingyu
  */
 const http = require("http");
@@ -32,15 +32,20 @@ const server = {
         try {
             // 当存在接口，并且接口符合标准
             if (hash.api && testInterface(hash.option, request)) {
-                interface.callback[hash.api](hash.option, request, response)
+                if (interface.callback[hash.api]) {
+                    interface.callback[hash.api](request, response)
+                }
             } else {
-                response.statusCode = 404;
-                response.end("null");
+                try {
+                    interface.callback['/'](request, response)
+                } catch (err) {
+                    throw err
+                }
             }
         } catch (err) {
             console.log(err)
             response.statusCode = 500;
-            response.end(err.message);
+            response.end(typeof err === 'string' ? err : '未知错误！');
         }
     },
 
@@ -70,7 +75,6 @@ const server = {
                         option: cell.option
                     }
                 } else {
-                    debugger
                     throw `API: '${sourceApi}' => '${item}' is undefined !`
                 }
             }
@@ -86,12 +90,12 @@ const server = {
 
     getSource(url) {
         const arr = url.split('/').filter(item => {
-            return item && !item.endsWith('.css') && !item.endsWith('.js') && !item.endsWith('.png') && !item.endsWith('.jpg') && !item.endsWith('.jpeg') && !item.endsWith('.html') && !item.endsWith('.map') && !item.endsWith('.ico')
+            return item && !item.endsWith('.css') && !item.endsWith('.js') && !item.endsWith('.png') && !item.endsWith('.jpg') && !item.endsWith('.jpeg') && !item.endsWith('.html') && !item.endsWith('.map') && !item.endsWith('.ico') && !item.endsWith('.woff') && !item.endsWith('.ttf')
         })
 
         return {
             api: arr,
-            is: url.endsWith('.css') || url.endsWith('.js') || url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg') || url.endsWith('.html') || url.endsWith('.map') || url.endsWith('.ico')
+            is: url.endsWith('.css') || url.endsWith('.js') || url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg') || url.endsWith('.html') || url.endsWith('.map') || url.endsWith('.ico') || url.endsWith('.woff') || url.endsWith('.ttf')
         }
     }
 };
