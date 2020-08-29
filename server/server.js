@@ -1,12 +1,16 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:48
- * @LastEditTime: 2020-08-27 18:09:29
+ * @LastEditTime: 2020-08-29 08:57:17
  * @LastEditors: zhuqingyu
  */
 const http = require("http");
+const uuid = require("node-uuid");
 const interface = require("./interface/index.js");
 const testInterface = global._global.components.testInterface
+const url = require('url');
+const socketHub = require('./socket/index.js');
+const socketPool = {}
 
 const server = {
     _server: null,
@@ -17,6 +21,7 @@ const server = {
             try {
                 console.log(`创建一个服务端口:${port}`);
                 $this._server = http.createServer($this.getMessage.bind($this));
+                $this._server.on('upgrade', $this.upgrade.bind($this))
                 console.log("监听服务准备就绪事件！");
                 $this._server.listen(port, resolve());
             } catch (e) {
@@ -28,11 +33,11 @@ const server = {
     // 收到客户端的请求数据
     getMessage(request, response) {
         const hash = this.hash(request.url);
-        const host = request.headers.host;
         try {
             // 当存在接口，并且接口符合标准
             if (hash.api && testInterface(hash.option, request)) {
                 if (interface.callback[hash.api]) {
+                    console.log(hash.api)
                     interface.callback[hash.api](request, response)
                 }
             } else {
@@ -46,6 +51,28 @@ const server = {
             console.log(err)
             response.statusCode = 500;
             response.end(typeof err === 'string' ? err : '未知错误！');
+        }
+    },
+    // socket 通信
+    upgrade(request, socket, head) {
+        const pathname = url.parse(request.url).pathname // 接口名称
+        const hash = this.hash(pathname); // 是否有这个接口
+        const callback = interface.callback[pathname];
+
+        if (hash.api && callback) {
+            const wss = socketHub[pathname]
+
+            wss.handleUpgrade(request, socket, head, ws => {
+                const socketID = uuid()
+                socketPool[socketID] = ws
+
+                ws.on('message', data => {
+                    callback(wss, ws, request, socket, socketID, data)
+                })
+                // 先给客户端一个唯一ID，通知其初始化，以后请求都要带上这个ID
+                ws.send(socketID)
+                ws.socketID = socketID
+            })
         }
     },
 

@@ -1,13 +1,11 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-08-28 16:08:43
+ * @LastEditTime: 2020-08-29 09:00:12
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
-const {
-  json
-} = require("express");
+
 const contentType = global._global.components.contentType; // 分配contentType
 const getBody = global._global.components.getBody; // 获得请求体 body（String）
 const testOption = global._global.components.testOption; // 处理复杂请求第一个试探请求
@@ -20,7 +18,7 @@ const setFolder = global._global.tools.setFolder; // 删除文件夹
 const git = require(PATH.GIT);
 const fileReader = require(PATH.FILEREADER_PATH);
 const crypto = require(PATH.CRYPTO_PATH); // 加密/解密/生成token 模块
-const outTime = 1000 * 60 * 10 // 10分钟
+const outTime = 1000 * 60 * 60 // 60分钟
 
 const publish = {
   // 发布代码页面UI接口
@@ -310,5 +308,45 @@ const publish = {
       response.end();
     }
   },
+
+  "/publish/home/projects/install": function (wss, ws, request, socket, socketID, data) {
+    // wss: 最外层管理socketServer ws:当前分配的对象 
+    try {
+      if (data.heartBeat) return
+      const message = JSON.parse(data)
+      const projectID = message.projectID
+      const token = message.token
+      const userSocketID = message.socketID
+
+      if (!projectID) throw '请选择一个项目然后安装'
+      if (userSocketID !== socketID) {
+        throw 'socketID 不正确'
+      }
+
+      testToken(token) // 验证token
+
+      git.install(projectID, data => {
+        console.log(data)
+        ws.send(JSON.stringify(data))
+        if (data.end) {
+          ws.close(1000, '下载完成！')
+          console.log(`ws.socketID:${ws.socketID}<=>socketID:${socketID}`)
+          console.log('wss', wss)
+        }
+      })
+
+    } catch (err) {
+      let reason
+      if (typeof err === 'object') {
+        reason = JSON.stringify(err)
+      } else if (typeof err === 'string') {
+        reason = err
+      } else {
+        reason = '位置错误！'
+      }
+      ws.close(1007, )
+    }
+
+  }
 };
 module.exports = publish;

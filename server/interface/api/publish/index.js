@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:17:03
- * @LastEditTime: 2020-08-27 13:58:25
+ * @LastEditTime: 2020-08-28 20:44:28
  * @LastEditors: zhuqingyu
  */
 const publish = {
@@ -37,6 +37,9 @@ const publish = {
                 option: {
                     method: 'POST'
                 }
+            },
+            'install': {
+                option: {}
             }
         }
     } // 发布页主页

@@ -1,10 +1,11 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:36:56
- * @LastEditTime: 2020-08-28 15:56:34
+ * @LastEditTime: 2020-08-29 01:43:17
  * @LastEditors: zhuqingyu
  */
 const exec = require("child_process").exec;
+const spawn = require("child_process").spawn;
 const path = require("path");
 const initGit = require("./init.js");
 
