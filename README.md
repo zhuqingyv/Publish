@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-09-01 02:03:18
+ * @LastEditTime: 2020-09-01 02:07:02
  * @LastEditors: zhuqingyu
 -->
 
@@ -13,8 +13,10 @@ forever -o out.log -e err.log index.js
 
 ## 测试账号
 
-账号：admin
-密码：5711663123
+    账号：admin
+    密码：5711663123
+
+    由于所有的 Http 请求都是手动处理的没有借助外部库比如 express 目前字体文件的解析还存在一些问题，有待解决，欢迎大佬前来提意见
 
 ## 备忘录
 
