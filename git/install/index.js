@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-28 17:44:01
- * @LastEditTime: 2020-08-29 01:05:20
+ * @LastEditTime: 2020-08-29 22:42:11
  * @LastEditors: zhuqingyu
  */
 const child_process = require("child_process");
@@ -29,13 +29,13 @@ module.exports = function (ID, callback) {
             console.log(`开始安装${project.gitName}`)
 
             callback({
-                installInfo: command,
+                info: command,
                 type: 'log',
                 end: false
             })
 
             callback({
-                installInfo: `开始安装: 【${project.gitName}】`,
+                info: `开始安装: 【${project.gitName}】`,
                 type: 'log',
                 end: false
             })
@@ -46,10 +46,10 @@ module.exports = function (ID, callback) {
 
             running.stdout.on('data', data => {
                 if (!data) return
-                const installInfo = data.toString()
-                if (installInfo) {
+                const info = data.toString()
+                if (info) {
                     callback({
-                        installInfo,
+                        info,
                         type: 'log',
                         end: false
                     })
@@ -58,10 +58,10 @@ module.exports = function (ID, callback) {
 
             running.stderr.on('data', (data) => {
                 if (!data) return
-                const installInfo = data.toString()
-                if (installInfo) {
+                const info = data.toString()
+                if (info) {
                     callback({
-                        installInfo,
+                        info,
                         type: 'warn',
                         end: false
                     })
@@ -70,7 +70,7 @@ module.exports = function (ID, callback) {
 
             running.stdout.on('end', () => {
                 callback({
-                    installInfo: `【${project.gitName}】安装完毕！`,
+                    info: `【${project.gitName}】安装完毕！`,
                     type: 'log',
                     end: true
                 })

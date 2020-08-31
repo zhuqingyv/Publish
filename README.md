@@ -1,11 +1,15 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-08-27 02:05:32
+ * @LastEditTime: 2020-08-29 23:26:34
  * @LastEditors: zhuqingyu
 -->
 
 # Publish 简介
+
+## 启动
+
+forever -o out.log -e err.log index.js
 
 ## 功能
 

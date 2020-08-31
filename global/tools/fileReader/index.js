@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 18:40:07
- * @LastEditTime: 2020-08-26 14:25:07
+ * @LastEditTime: 2020-08-29 18:12:50
  * @LastEditors: zhuqingyu
  */
 const fs = require("fs");
@@ -49,7 +49,7 @@ const fileReader = {
     try {
       return fs.openSync(path, mode);
     } catch (err) {
-      throw err;
+      return false
     }
   },
   // 获取文件信息

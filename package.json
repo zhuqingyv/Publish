@@ -12,7 +12,9 @@
     "eslint": "^7.7.0"
   },
   "dependencies": {
+    "forever": "^3.0.2",
     "fs-extra": "^9.0.1",
+    "http-server": "^0.12.3",
     "node-rsa": "^1.1.1",
     "node-uuid": "^1.4.8",
     "request": "^2.88.2",
