@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-08-31 18:03:38
+ * @LastEditTime: 2020-09-01 01:12:55
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -36,7 +36,7 @@ const publish = {
       // 是否是字体文件
       const ifFont = _contentType.ifFont;
       // 相对路径替换
-      const baseUrl = url.replace("/", "../../../../view/dist/");
+      const baseUrl = url.replace("/", "../../../../../Publish-View/dist/");
       // 资源绝对路径
       const _path = path.resolve(__dirname, baseUrl);
 
@@ -148,6 +148,7 @@ const publish = {
             // 返回数据
             responseBody.login = true;
             responseBody.token = token;
+            responseBody.userInfo = userInfo;
             response.statusCode = 200;
             response.end(JSON.stringify(responseBody), "utf8");
           } else {
@@ -379,7 +380,7 @@ const publish = {
       if (message.heartBeat) return;
       if (!token) throw "请登录";
       const tokenInfo = testToken(token);
-      if (!tokenInfo) debugger
+      if (!tokenInfo) debugger;
       if (!tokenInfo) throw "请登录";
       const name = tokenInfo.name; // 用户名
 
