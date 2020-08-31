@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 01:12:55
+ * @LastEditTime: 2020-09-01 01:53:37
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -194,6 +194,7 @@ const publish = {
           const publishJson = JSON.parse(
             global._global.tools.fileReader.getJson(publishJsonPath)
           ); // 全部的项目数据
+
           const token = body.token; // token
           if (!testToken(token)) throw "非法登陆";
           const userInfo = JSON.parse(crypto.Decrypt(token, "1995")); // 用户 token信息
@@ -204,10 +205,21 @@ const publish = {
 
           if (!userData.userPool[name]) throw "非法用户登陆";
           if (userData.userPool[name].time < Date.now()) throw "身份过期";
-          if (userData.userPool[name].passWord !== passWord)
-            throw "用户信息变更";
+          if (userData.userPool[name].passWord !== passWord) throw "用户信息变更";
           if (userData.userPool[name].uuid !== uuid) throw "签名不一致";
-
+          console.log(userData)
+          console.log(publishJson)
+          if (name === "admin") {
+            response.statusCode = 200;
+            response.setHeader("Content-Type", "application/json");
+            response.end(
+              JSON.stringify({
+                publishJson.projects
+              }),
+              "utf8"
+            );
+            return
+          }
           userData.userPool[name].projects.forEach((projectID) => {
             const project = publishJson.projects[projectID];
             if (project) {
