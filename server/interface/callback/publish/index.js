@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 03:17:24
+ * @LastEditTime: 2020-09-01 03:28:07
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -218,7 +218,9 @@ const publish = {
             response.statusCode = 200;
             response.setHeader("Content-Type", "application/json");
             response.end(
-              JSON.stringify(arr),
+              JSON.stringify({
+                projects: arr
+              }),
               "utf8"
             );
             return
@@ -395,7 +397,7 @@ const publish = {
       if (message.heartBeat) return;
       if (!token) throw "请登录";
       const tokenInfo = testToken(token);
-      if (!tokenInfo) debugger;
+
       if (!tokenInfo) throw "请登录";
       const name = tokenInfo.name; // 用户名
 
