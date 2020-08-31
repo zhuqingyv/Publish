@@ -1,1 +1,13 @@
-{"projects":{"8f434b04-edaf-4398-a51e-236730ec7172_PianoElementsTest":{"id":"8f434b04-edaf-4398-a51e-236730ec7172_PianoElementsTest","name":"PianoElementsTest","gitName":"PianoElementsTest","version":"未规定版本","description":"没有描述","url":"https://github.com/zhuqingyv/PianoElementsTest.git"},"42c536f8-79f9-4b45-aa14-e973e51ab8a9_testP":{"id":"42c536f8-79f9-4b45-aa14-e973e51ab8a9_testP","name":"testP","gitName":"PianoElementsTest","version":"未规定版本","description":"没有描述","url":"https://github.com/zhuqingyv/PianoElementsTest.git"}}}
+{
+	"projects": {
+		"f43508e9-c1dc-4d67-873e-193193923a61_1": {
+			"id": "f43508e9-c1dc-4d67-873e-193193923a61_1",
+			"name": "1",
+			"gitName": "Publish-View",
+			"version": "0.1.0",
+			"description": "没有描述",
+			"url": " https://github.com/zhuqingyv/Publish-View.git",
+			"port": 8082
+		}
+	}
+}

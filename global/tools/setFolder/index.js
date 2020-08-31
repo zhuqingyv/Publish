@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:55:02
- * @LastEditTime: 2020-08-26 21:20:09
+ * @LastEditTime: 2020-08-31 14:06:21
  * @LastEditors: zhuqingyu
  */
 const fs = require("fs")
@@ -16,7 +16,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             fs.access(path, err => {
                 if (err) {
-                    reject(err)
+                    reject(false)
                     return
                 }
                 try {

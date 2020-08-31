@@ -1,24 +1,9 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:36:51
- * @LastEditTime: 2020-08-30 10:10:53
+ * @LastEditTime: 2020-08-31 17:59:49
  * @LastEditors: zhuqingyu
  */
-// const exec = require("child_process").exec;
-// const fileReader = require(PATH.FILEREADER_PATH);
-
-// module.exports = function (ID) {
-//     return new Promise((resolve, reject) => {
-//         const project = JSON.parse(fileReader.getJson(`${PATH.PUBLISH_JSON}`))
-//             .projects[ID]; // 项目信息
-//         const command_build = project.command_build;
-//         const command = `cd ./git/github/${ID}/${project.gitName} && npm run ${command_build}`;
-//         debugger;
-//         exec(command, (error, stdout, stderr) => {
-//             if (error) {}
-//         });
-//     });
-// };
 const child_process = require("child_process");
 const fileReader = require(PATH.FILEREADER_PATH);
 
@@ -77,5 +62,16 @@ module.exports = function (ID, callback) {
       end: true
     })
   })
+
+  running.on('close', function (code) {
+    if (code !== 0) {
+      console.log('echo exists with code: ' + code);
+    }
+    callback(callback({
+      info: `【${project.gitName}】命令执行结束`,
+      type: 'log',
+      end: true
+    }))
+  });
 
 };

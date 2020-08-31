@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:48
- * @LastEditTime: 2020-08-31 13:46:08
+ * @LastEditTime: 2020-08-31 16:08:03
  * @LastEditors: zhuqingyu
  */
 const http = require("http");
@@ -48,7 +48,6 @@ const server = {
                 }
             }
         } catch (err) {
-            console.log(err)
             response.statusCode = 500;
             response.end(typeof err === 'string' ? err : '未知错误！');
         }
@@ -68,7 +67,6 @@ const server = {
                 wss.handleUpgrade(request, socket, head, ws => {
                     const socketID = uuid()
                     console.log('socket=>>>>>>', pathname)
-                    console.log(wss, ws, socket)
                     ws.on('message', data => {
                         callback(wss, ws, request, socket, socketID, data)
                     })

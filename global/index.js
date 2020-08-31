@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:59:33
- * @LastEditTime: 2020-08-27 19:15:06
+ * @LastEditTime: 2020-08-31 15:07:14
  * @LastEditors: zhuqingyu
  */
 // 工具
@@ -10,6 +10,7 @@ const fileReader = require('./tools/fileReader/index.js');
 const getPort = require('./tools/getPort/index.js');
 const StringToBuffer = require('./tools/stringToBuffer/index.js');
 const crypto = require('./tools/crypto/index.js');
+const killPort = require('./tools/killPort/index.js');
 
 // 组件
 const publishJson = require('./components/PublishJson/index.js');
@@ -50,6 +51,8 @@ module.exports = {
         // 字符串转 Buffer
         StringToBuffer,
         // 加密模块
-        crypto
+        crypto,
+        // 关闭某个端口
+        killPort
     }
 }

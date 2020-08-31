@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-08-30 10:25:31
+ * @LastEditTime: 2020-08-31 18:03:38
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -231,13 +231,13 @@ const publish = {
           response.statusCode = 403;
           response.setHeader("Content-Type", "application/json");
           response.end("服务器出错！", "utf8");
-          throw err
+          throw err;
         });
     } catch (err) {
       response.statusCode = 401;
       response.setHeader("Content-Type", "application/json");
       response.end("未知错误", "utf8");
-      throw err
+      throw err;
     }
   },
 
@@ -333,7 +333,7 @@ const publish = {
       const projectID = message.projectID;
       const token = message.token;
       const userSocketID = message.socketID;
-
+      if (message.heartBeat) return;
       if (!projectID) throw "请选择一个项目然后安装";
       if (userSocketID !== socketID) {
         throw "socketID 不正确";
@@ -363,56 +363,113 @@ const publish = {
   },
 
   // 打包一个项目
-  "/publish/home/projects/build": function (wss,
+  "/publish/home/projects/build": function (
+    wss,
     ws,
     request,
     socket,
     socketID,
-    data) {
-    console.log(ws, request, socket, socketID, data)
+    data
+  ) {
     try {
-      const message = JSON.parse(data)
-      if (message.socketID !== socketID) throw 'socketID不正确！'
+      const message = JSON.parse(data);
+      if (message.socketID !== socketID) throw "socketID不正确！";
 
-      const token = message.token
-      if (!token) throw '请登录'
-      const tokenInfo = testToken(token)
-
-      if (!tokenInfo) throw '请登录'
+      const token = message.token;
+      if (message.heartBeat) return;
+      if (!token) throw "请登录";
+      const tokenInfo = testToken(token);
+      if (!tokenInfo) debugger
+      if (!tokenInfo) throw "请登录";
       const name = tokenInfo.name; // 用户名
 
-      let userInfo
+      let userInfo;
       try {
-        userInfo = JSON.parse(fileReader.getJson(PATH.USERDATA_PATH)).userPool[name] // 用户信息
-        if (!userInfo) throw '用户不存在'
+        userInfo = JSON.parse(fileReader.getJson(PATH.USERDATA_PATH)).userPool[
+          name
+        ]; // 用户信息
+        if (!userInfo) throw "用户不存在";
       } catch (err) {
-        throw ' 用户不存在！'
+        throw " 用户不存在！";
       }
 
-      const user_projects = userInfo.projects // 用户上传的项目，也就是可以操作的项目
-      const projectID = message.projectID
+      const user_projects = userInfo.projects; // 用户上传的项目，也就是可以操作的项目
+      const projectID = message.projectID;
 
-      if (!projectID) throw '缺少projectID'
+      if (!projectID) throw "缺少projectID";
 
-      const project = user_projects.find(pjid => pjid === projectID)
-      if (name !== 'admin' && !project) throw '用户没有权限build此项目' // 检查用户是否有权限操作此项目
+      const project = user_projects.find((pjid) => pjid === projectID);
+      if (name !== "admin" && !project) throw "用户没有权限build此项目"; // 检查用户是否有权限操作此项目
 
-      git.build(projectID, buildMsg => {
-        if (!buildMsg) throw '500'
+      git.build(projectID, (buildMsg) => {
+        if (!buildMsg) throw "500";
         try {
-          const str = JSON.stringify(buildMsg)
-          ws.send(str)
+          const str = JSON.stringify(buildMsg);
+          ws.send(str);
           if (buildMsg.end) {
             ws.close(1000, "安装完成！");
           }
         } catch (err) {
-          throw '安装失败'
+          throw "安装失败";
         }
-      })
-
+      });
     } catch (err) {
-      ws.close(1007, err)
+      ws.close(1007, err);
     }
-  }
+  },
+  // 发布一个项目
+  "/publish/home/projects/online": function (
+    wss,
+    ws,
+    request,
+    socket,
+    socketID,
+    data
+  ) {
+    try {
+      const message = JSON.parse(data);
+      if (message.socketID !== socketID) throw "socketID不正确！";
+
+      const token = message.token;
+      if (!token) throw "请登录";
+      const tokenInfo = testToken(token);
+
+      if (!tokenInfo) throw "请登录";
+      const name = tokenInfo.name; // 用户名
+
+      let userInfo;
+      try {
+        userInfo = JSON.parse(fileReader.getJson(PATH.USERDATA_PATH)).userPool[
+          name
+        ]; // 用户信息
+        if (!userInfo) throw "用户不存在";
+      } catch (err) {
+        throw " 用户不存在！";
+      }
+
+      const user_projects = userInfo.projects; // 用户上传的项目，也就是可以操作的项目
+      const projectID = message.projectID;
+
+      if (!projectID) throw "缺少projectID";
+
+      const project = user_projects.find((pjid) => pjid === projectID);
+      if (name !== "admin" && !project) throw "用户没有权限build此项目"; // 检查用户是否有权限操作此项目
+
+      git.buildServer(projectID, (runningMsg) => {
+        if (!runningMsg) throw "500";
+        try {
+          const str = JSON.stringify(runningMsg);
+          ws.send(str);
+          if (runningMsg.end) {
+            ws.close(1000, "服务开启完成！");
+          }
+        } catch (err) {
+          throw "安装失败";
+        }
+      });
+    } catch (err) {
+      ws.close(1007, err);
+    }
+  },
 };
 module.exports = publish;

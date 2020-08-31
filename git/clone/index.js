@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:36:56
- * @LastEditTime: 2020-08-29 21:04:22
+ * @LastEditTime: 2020-08-31 17:45:17
  * @LastEditors: zhuqingyu
  */
 const exec = require("child_process").exec;
@@ -13,6 +13,7 @@ module.exports = function (gitHttps, _name, _userToken, callback) {
   const userName = _userToken.name;
   try {
     return initGit(_name).then((id, init_stdout, init_stderr) => {
+      debugger
       // 执行git 初始化成功！
       const json = {
         id: id,
@@ -62,9 +63,9 @@ module.exports = function (gitHttps, _name, _userToken, callback) {
       // 克隆结束
       running.stdout.on("end", (error) => {
         if (!callback) return;
-        let message = error
-          ? error.toString()
-          : `【${json.gitName}】安装完毕！`;
+        let message = error ?
+          error.toString() :
+          `【${json.gitName}】安装完毕！`;
 
         // github 名称
         const baseName = json.gitName;
@@ -72,11 +73,10 @@ module.exports = function (gitHttps, _name, _userToken, callback) {
         // 尝试寻找package.json路径
         const json_path = `${PATH.GITHUB_PATH}/${id}/${baseName}/package.json`;
 
-        // 如果package.json 不存在就创建一个
-        global._global.tools.fileReader.open(json_path, "w+");
-
         // 如果package为空，写入内容
-        if (!global._global.tools.fileReader.getJson(json_path, "utf8")) {
+        if (!require(json_path)) {
+          // 如果package.json 不存在就创建一个
+          global._global.tools.fileReader.open(json_path, "w+");
           global._global.tools.fileReader.setJson(
             json_path,
             JSON.stringify({

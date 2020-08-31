@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:17:03
- * @LastEditTime: 2020-08-29 22:02:21
+ * @LastEditTime: 2020-08-31 15:36:29
  * @LastEditors: zhuqingyu
  */
 const publish = {
@@ -40,6 +40,9 @@ const publish = {
                 option: {}
             },
             'build': {
+                option: {}
+            },
+            'online': {
                 option: {}
             }
         }
