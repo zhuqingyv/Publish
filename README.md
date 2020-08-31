@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-09-01 02:07:02
+ * @LastEditTime: 2020-09-01 02:08:28
  * @LastEditors: zhuqingyu
 -->
 
@@ -20,9 +20,9 @@ forever -o out.log -e err.log index.js
 
 ## 备忘录
 
-git fetch --all
-git reset --hard origin/master
-git pull
+    git fetch --all
+    git reset --hard origin/master
+    git pull
 
 ### [项目预览地址](http://publish.pianoboy.club:8081/)
 
@@ -34,11 +34,11 @@ git pull
 
 **好处**
 
-用户无需在服务器里安装数据库就可以实现本地数据存储，同时自己可以自定义 json 的格式，而且 json 相比传统数据库表来说更加直观。
+    用户无需在服务器里安装数据库就可以实现本地数据存储，同时自己可以自定义 json 的格式，而且 json 相比传统数据库表来说更加直观。
 
 **缺点**
 
-相比数据库取数据的速度可能要慢一些。我的本意是利用 js 模块化的思路以及 Proxy 对 json 进行模块化以及实时数据监听，用户只需要将 json 通过 require 引入进来，通过 proxy 进行深层次的劫持，只要该模块有一处发生改变，触发了 set 或者 deletePropty 就找到 root 数据源，并且更新整个模块。然后通过一个统一的模块拼凑起来所有的 json 模块，这样就可以统一管理所有的 json 数据了。又因为 nodejs 支持同步/异步写入，接着同步的 API，开发者不需要再关注 fs 何时修改 json，以及层层的 Promise 关系,只需要关注 json 转换为 js 对象以后的修改即可看到项目里 json 文件自动修改。
+    相比数据库取数据的速度可能要慢一些。我的本意是利用 js 模块化的思路以及 Proxy 对 json 进行模块化以及实时数据监听，用户只需要将 json 通过 require 引入进来，通过 proxy 进行深层次的劫持，只要该模块有一处发生改变，触发了 set 或者 deletePropty 就找到 root 数据源，并且更新整个模块。然后通过一个统一的模块拼凑起来所有的 json 模块，这样就可以统一管理所有的 json 数据了。又因为 nodejs 支持同步/异步写入，接着同步的 API，开发者不需要再关注 fs 何时修改 json，以及层层的 Promise 关系,只需要关注 json 转换为 js 对象以后的修改即可看到项目里 json 文件自动修改。
 例如：
 
 ```javascript
