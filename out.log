@@ -1,12 +1,13 @@
 创建一个服务端口:8081
 监听服务准备就绪事件！
 Server on Port: => 8081
-/publish/login
-/publish/login
-/publish/home/projects
-/publish/home/projects
-socket=>>>>>> /publish/home/projects/online
-/publish/login
-/publish/login
-/publish/home/projects
-/publish/home/projects
+/
+/
+process捕获到未知错误 { err:
+   { Error: ENOENT: no such file or directory, open '/Users/pianoboy/Publish-View/dist/fontSw.js'
+     errno: -2,
+     code: 'ENOENT',
+     syscall: 'open',
+     path: '/Users/pianoboy/Publish-View/dist/fontSw.js' },
+  stack:
+   'Error: ENOENT: no such file or directory, open \'/Users/pianoboy/Publish-View/dist/fontSw.js\'' }
