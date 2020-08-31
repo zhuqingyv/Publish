@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-08-29 23:26:34
+ * @LastEditTime: 2020-09-01 01:55:18
  * @LastEditors: zhuqingyu
 -->
 
@@ -10,6 +10,11 @@
 ## 启动
 
 forever -o out.log -e err.log index.js
+
+备忘录：
+git fetch --all
+git reset --hard origin/master
+git pull
 
 ## 功能
 
