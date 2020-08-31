@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-09-01 01:55:18
+ * @LastEditTime: 2020-09-01 02:03:18
  * @LastEditors: zhuqingyu
 -->
 
@@ -11,10 +11,18 @@
 
 forever -o out.log -e err.log index.js
 
-备忘录：
+## 测试账号
+
+账号：admin
+密码：5711663123
+
+## 备忘录
+
 git fetch --all
 git reset --hard origin/master
 git pull
+
+### [项目预览地址](http://publish.pianoboy.club:8081/)
 
 ## 功能
 
