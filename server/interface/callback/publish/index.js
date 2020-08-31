@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 01:53:37
+ * @LastEditTime: 2020-09-01 01:58:02
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -213,9 +213,7 @@ const publish = {
             response.statusCode = 200;
             response.setHeader("Content-Type", "application/json");
             response.end(
-              JSON.stringify({
-                publishJson.projects
-              }),
+              JSON.stringify(publishJson.projects),
               "utf8"
             );
             return
