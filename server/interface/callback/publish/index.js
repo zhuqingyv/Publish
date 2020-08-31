@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 01:58:02
+ * @LastEditTime: 2020-09-01 02:55:29
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -47,7 +47,7 @@ const publish = {
           if (err) {
             throw err;
           }
-          response.statusCode = 200;
+          response.statusCode = 304;
           response.setHeader("Content-Type", type);
           // if (ifFont) {
           //   response.setHeader("Content-Type", 'text/plain');
@@ -210,10 +210,14 @@ const publish = {
           console.log(userData)
           console.log(publishJson)
           if (name === "admin") {
+            let arr = Object.keys(publishJson.projects).reduce((pre, cur) => {
+              pre.push(publishJson.projects[cur])
+              return pre
+            }, [])
             response.statusCode = 200;
             response.setHeader("Content-Type", "application/json");
             response.end(
-              JSON.stringify(publishJson.projects),
+              JSON.stringify(arr),
               "utf8"
             );
             return
