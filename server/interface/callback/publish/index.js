@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 03:14:57
+ * @LastEditTime: 2020-09-01 03:17:24
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -35,7 +35,7 @@ const publish = {
       const ifMedia = _contentType.ifMedia;
       // 是否是字体文件
       const ifFont = _contentType.ifFont;
-      debugger
+
       // 相对路径替换
       const baseUrl = url.replace("/", "../../../../../Publish-View/dist/");
       // 资源绝对路径
