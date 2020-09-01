@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-09-01 12:51:03
+ * @LastEditTime: 2020-09-01 15:45:03
  * @LastEditors: zhuqingyu
 -->
 
@@ -15,8 +15,8 @@ forever -o out.log -e err.log index.js
 
 ## 测试账号
 
-    账号：admin
-    密码：5711663123
+    登陆下面有一个游客登陆，不需要账号密码就可以一键登陆
+    但是游客身份受限制，只能操作自己上传的项目
 
     由于所有的 Http 请求都是手动处理的没有借助外部库比如 express 目前字体文件的解析还存在一些问题，有待解决，欢迎大佬前来提意见
 
