@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 14:12:03
+ * @LastEditTime: 2020-09-01 20:32:32
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -67,14 +67,12 @@ const publish = {
         response.statusCode = 404;
         response.setHeader("Content-Type", "text/xml");
         response.end();
-        console.log(err);
       }
 
     } catch (err) {
       response.statusCode = 500;
       response.setHeader("Content-Type", "text/xml");
       response.end();
-      console.log(err);
     }
   },
 
@@ -169,20 +167,17 @@ const publish = {
               }),
               "utf8"
             );
-            console.warn("请求体不正确！");
           }
         })
         .catch((err) => {
           responseBody.login = false;
           response.statusCode = 403;
           response.end(typeof err === "string" ? err : "未知错误！", "utf8");
-          console.log(err);
         });
     } catch (err) {
       responseBody.login = false;
       response.statusCode = 500;
       response.end(typeof err === "string" ? err : "未知错误！", "utf8");
-      console.log(err);
     }
   },
 
@@ -194,7 +189,7 @@ const publish = {
     allowHeader(response); // 处理跨域
 
     if (testOption(request, response)) return; //  处理复杂请求
-
+    console.log(request.url, request.headers.host)
     try {
       getBody(request)
         .then((data) => {
@@ -215,8 +210,6 @@ const publish = {
           if (userData.userPool[name].time < Date.now()) throw "身份过期";
           if (userData.userPool[name].passWord !== passWord) throw "用户信息变更";
           if (userData.userPool[name].uuid !== uuid) throw "签名不一致";
-          console.log(userData)
-          console.log(publishJson)
 
           // 管理员和游客可以查看所有的项目
           if (name === "admin" || name === "tourist") {
@@ -354,8 +347,6 @@ const publish = {
         ws.send(JSON.stringify(data));
         if (data.end) {
           ws.close(1000, "下载完成！");
-          console.log(`ws.socketID:${ws.socketID}<=>socketID:${socketID}`);
-          console.log("wss", wss);
         }
       });
     } catch (err) {
@@ -403,7 +394,6 @@ const publish = {
         ws.send(JSON.stringify(msg));
         if (msg.end) {
           ws.close(1000, "安装完成！");
-          console.log(`ws.socketID:${ws.socketID}<=>socketID:${socketID}`);
         }
       });
     } catch (err) {
