@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-09-01 02:10:16
+ * @LastEditTime: 2020-09-01 12:51:03
  * @LastEditors: zhuqingyu
 -->
 
@@ -26,7 +26,7 @@ forever -o out.log -e err.log index.js
     git reset --hard origin/master
     git pull
 
-### [项目预览地址](http://publish.pianoboy.club:8081/)
+### [项目预览地址](http://publish.pianoboy.club:8082/)
 
 ## 功能
 

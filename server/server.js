@@ -1,15 +1,17 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:48
- * @LastEditTime: 2020-08-31 16:08:03
+ * @LastEditTime: 2020-09-01 15:14:42
  * @LastEditors: zhuqingyu
  */
 const http = require("http");
 const uuid = require("node-uuid");
 const interface = require("./interface/index.js");
-const testInterface = global._global.components.testInterface
+const testInterface = global._global.components.testInterface;
 const url = require('url');
 const socketHub = require('./socket/index.js');
+const testAuthorization = require(PATH.COMPONENTS.TEST_AUTHORIZATION);
+const testOption = require(PATH.COMPONENTS.TEST_OPTION) // 处理复杂请求第一个试探请求
 
 const server = {
     _server: null,
@@ -37,7 +39,7 @@ const server = {
             // 当存在接口，并且接口符合标准
             if (hash.api && testInterface(hash.option, request)) {
                 if (interface.callback[hash.api]) {
-                    console.log(hash.api)
+                    if (!testAuthorization(request, hash.api)) return
                     interface.callback[hash.api](request, response)
                 }
             } else {

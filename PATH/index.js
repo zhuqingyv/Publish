@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-26 22:16:16
- * @LastEditTime: 2020-08-31 16:21:28
+ * @LastEditTime: 2020-09-01 15:09:49
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -21,7 +21,12 @@ const PATH = {
     KILL_PORT: path.resolve(__dirname, "../global/tools/killPort/index.js"), // 关闭某个端口 工具
     SERVER_JSON: path.resolve(__dirname, "../server/server.json"),
     TOOLS: {
-        GET_PORT: path.relative(__dirname, "../global/tools/getPort/index.js")
+        GET_PORT: path.resolve(__dirname, "../global/tools/getPort/index.js")
+    },
+    COMPONENTS: {
+        GET_BODY: path.resolve(__dirname, "../global/components/getBody/index.js"),
+        TEST_AUTHORIZATION: path.resolve(__dirname, "../global/components/testAuthorization/index.js"),
+        TEST_OPTION: path.resolve(__dirname, "../global/components/testOption/index.js")
     }
 };
 

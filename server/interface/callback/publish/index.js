@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 10:22:51
+ * @LastEditTime: 2020-09-01 14:12:03
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -217,7 +217,9 @@ const publish = {
           if (userData.userPool[name].uuid !== uuid) throw "签名不一致";
           console.log(userData)
           console.log(publishJson)
-          if (name === "admin") {
+
+          // 管理员和游客可以查看所有的项目
+          if (name === "admin" || name === "tourist") {
             let arr = Object.keys(publishJson.projects).reduce((pre, cur) => {
               pre.push(publishJson.projects[cur])
               return pre
@@ -277,9 +279,21 @@ const publish = {
       getBody(request).then((data, end) => {
         try {
           const body = JSON.parse(data[0]);
-          const id = body.id;
-          const hubURL = `${PATH.GITHUB_PATH}/${id}`;
-          console.log(`删除ID：${id}`);
+          const projectID = body.projectID;
+          const hubURL = `${PATH.GITHUB_PATH}/${projectID}`;
+
+          const token = body.token;
+          if (!token) throw '非法用户登陆'
+
+          const tokenInfo = testToken(token); // 验证签名
+          if (!tokenInfo) throw '非法用户登陆'
+
+          const userInfo = JSON.parse(fileReader.getJson(PATH.USERDATA_PATH)).userPool[tokenInfo.name]
+          if (!userInfo) throw '不存在该用户'
+
+          const canDo = userInfo.projects.find(pro => pro === projectID); // 是否可操作当前项目
+          if (!canDo) throw '没有权限操作此项目'
+
           setFolder.delete(hubURL).then(() => {
             let json = require(PATH.PUBLISH_JSON);
             delete json.projects[id];
@@ -289,12 +303,23 @@ const publish = {
             response.end(json, "utf8");
           });
         } catch (err) {
-          response.statusCode = 500;
-          response.setHeader("Content-Type", "application/json");
-          response.end();
+          throw '删除的过程中出现了问题'
         }
       });
-    } catch (err) {}
+    } catch (err) {
+      let errMsg = "服务器错误"
+      let code = 500
+      if (typeof err === "string") {
+        errMsg = err
+        code = 403
+      } else if (typeof err === "object") {
+        errMsg = JSON.stringify(err)
+        code = 500
+      }
+      response.statusCode = code;
+      response.setHeader("Content-Type", "application/json");
+      response.end(errMsg);
+    }
   },
 
   // 新增一个项目 wss, ws, request, socket, socketID, data
@@ -309,16 +334,20 @@ const publish = {
     try {
       if (data.heartBeat) return;
       const message = JSON.parse(data);
-      const token = message.token;
-      const tokenInfo = testToken(token); // 验证签名
 
-      if (message.socketID !== socketID) throw "socketID不对！";
+      const token = message.token;
+      if (!token) throw "非法用户登陆";
+
+      const tokenInfo = testToken(token); // 验证签名
       if (!tokenInfo) throw "非法用户登陆";
 
-      const url = message.url; // github 地址
-      const name = message.name; // 名称
+      if (message.socketID !== socketID) throw "socketID不对！";
 
+
+      const url = message.url; // github 地址
       if (!url) throw "地址不存在！";
+
+      const name = message.name; // 名称
       if (!name) throw "没有名称";
 
       git.clone(url, name, tokenInfo, (data) => {
@@ -355,23 +384,26 @@ const publish = {
     try {
       const message = JSON.parse(data);
       if (message.heartBeat) return;
-      const projectID = message.projectID;
-      const token = message.token;
-      const userSocketID = message.socketID;
-      if (message.heartBeat) return;
-      if (!projectID) throw "请选择一个项目然后安装";
-      if (userSocketID !== socketID) {
-        throw "socketID 不正确";
-      }
 
-      testToken(token); // 验证token
+      const projectID = message.projectID;
+      if (!projectID) throw '没有指定 install 的项目ID'
+
+      const token = message.token;
+      if (!token) throw '非法用户'
+
+      const userSocketID = message.socketID;
+      if (userSocketID !== socketID) throw "socketID 不正确";
+
+      if (message.heartBeat) return;
+
+      const tokenInfo = testToken(token); // 验证签名
+      if (!tokenInfo) throw '非法用户登陆'
 
       git.install(projectID, (msg) => {
         ws.send(JSON.stringify(msg));
         if (msg.end) {
-          ws.close(1000, "下载完成！");
+          ws.close(1000, "安装完成！");
           console.log(`ws.socketID:${ws.socketID}<=>socketID:${socketID}`);
-          console.log("wss", wss);
         }
       });
     } catch (err) {
@@ -398,14 +430,16 @@ const publish = {
   ) {
     try {
       const message = JSON.parse(data);
+      if (message.heartBeat) return;
+
       if (message.socketID !== socketID) throw "socketID不正确！";
 
       const token = message.token;
-      if (message.heartBeat) return;
       if (!token) throw "请登录";
-      const tokenInfo = testToken(token);
 
+      const tokenInfo = testToken(token);
       if (!tokenInfo) throw "请登录";
+
       const name = tokenInfo.name; // 用户名
 
       let userInfo;
@@ -439,7 +473,12 @@ const publish = {
         }
       });
     } catch (err) {
-      ws.close(1007, err);
+      if (typeof err === 'object') {
+        ws.close(1007, JSON.stringify(err));
+      } else if (typeof err === 'string') {
+        ws.close(1007, err);
+      }
+      ws.close(1007, '打包失败')
     }
   },
   // 发布一个项目
@@ -457,9 +496,10 @@ const publish = {
 
       const token = message.token;
       if (!token) throw "请登录";
-      const tokenInfo = testToken(token);
 
+      const tokenInfo = testToken(token);
       if (!tokenInfo) throw "请登录";
+
       const name = tokenInfo.name; // 用户名
 
       let userInfo;
@@ -493,7 +533,12 @@ const publish = {
         }
       });
     } catch (err) {
-      ws.close(1007, err);
+      if (typeof err === 'object') {
+        ws.close(1007, JSON.stringify(err));
+      } else if (typeof err === 'string') {
+        ws.close(1007, err);
+      }
+      ws.close(1007, '打包失败')
     }
   },
 };

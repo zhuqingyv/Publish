@@ -1,1 +1,1 @@
-{"userPool":{"admin":{"passWord":"5711663123","priKey":"","token":"","authorization":"*","projects":["0178767d-206a-4445-a459-45df70419408_Publish-View"],"name":"admin","uuid":1598929172849,"time":1598932772860}}}
+{"userPool":{"admin":{"passWord":"5711663123","priKey":"","token":"","authorization":"*","projects":["0178767d-206a-4445-a459-45df70419408_Publish-View"],"name":"admin","uuid":1598929172849,"time":1598932772860},"tourist":{"passWord":"123456","priKey":"","token":"","authorization":"*","projects":[],"name":"tourist","uuid":1598944607453,"time":1598948207457}}}
