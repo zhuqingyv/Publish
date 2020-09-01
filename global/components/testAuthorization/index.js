@@ -1,11 +1,17 @@
+/*
+ * @Author: zhuqingyu
+ * @Date: 2020-09-01 15:18:15
+ * @LastEditTime: 2020-09-01 23:16:19
+ * @LastEditors: zhuqingyu
+ */
 const rule = require("./user.js");
 const getBody = require(PATH.COMPONENTS.GET_BODY);
 const crypto = require(PATH.CRYPTO_PATH);
 module.exports = async function (request, api) {
     if (request.method.toLowerCase() == 'options') return true
-    let body
+    let body = {}
     await getBody(request).then((data) => {
-        body = JSON.parse(data[0])
+        if (data[0]) body = JSON.parse(data[0])
     }).then(() => {
         body = {}
     })

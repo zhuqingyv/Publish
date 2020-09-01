@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:48
- * @LastEditTime: 2020-09-01 20:36:27
+ * @LastEditTime: 2020-09-01 23:15:46
  * @LastEditors: zhuqingyu
  */
 const http = require("http");
@@ -39,7 +39,12 @@ const server = {
             // 当存在接口，并且接口符合标准
             if (hash.api && testInterface(hash.option, request)) {
                 if (interface.callback[hash.api]) {
-                    if (!testAuthorization(request, hash.api)) return
+                    if (!testAuthorization(request, hash.api, response)) {
+                        response.statusCode = 403
+                        response.setHeader("Content-Type", "application/json");
+                        response.end();
+                        return
+                    }
                     interface.callback[hash.api](request, response)
                 }
             } else {

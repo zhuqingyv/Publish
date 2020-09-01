@@ -1,5 +1,8 @@
 {
-    "main": {
-        "port": "8081"
+    "publish": {
+        "port": "80"
+    },
+    "blog": {
+        "port": "8080"
     }
 }

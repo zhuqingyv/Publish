@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 23:02:40
+ * @LastEditTime: 2020-09-01 23:43:44
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -263,6 +263,8 @@ const publish = {
         try {
           const body = JSON.parse(data[0]);
           const projectID = body.projectID;
+          if (!projectID) throw 'projectID 为 undefined'
+
           const hubURL = `${PATH.GITHUB_PATH}/${projectID}`;
 
           const token = body.token;
@@ -271,29 +273,66 @@ const publish = {
           const tokenInfo = testToken(token); // 验证签名
           if (!tokenInfo) throw '非法用户登陆'
 
-          const userInfo = JSON.parse(fileReader.getJson(PATH.USERDATA_PATH)).userPool[tokenInfo.name]
+          const users = JSON.parse(fileReader.getJson(PATH.USERDATA_PATH))
+          const userInfo = users.userPool[tokenInfo.name]
           if (!userInfo) throw '不存在该用户'
 
-          const canDo = userInfo.projects.find(pro => pro === projectID); // 是否可操作当前项目
-          if (!canDo) throw '没有权限操作此项目'
+          if (userInfo.name !== "admin") {
+            const canDo = userInfo.projects.find(pro => pro === projectID); // 是否可操作当前项目
+            if (!canDo) throw '没有权限操作此项目'
+          }
+
 
           setFolder.delete(hubURL).then(() => {
             let json = JSON.parse(fileReader.getJson(PATH.PUBLISH_JSON));
-            delete json.projects[id];
-            json = fileReader.setJson(PATH.PUBLISH_JSON, JSON.stringify(json));
+            delete json.projects[projectID];
+            json = JSON.parse(fileReader.setJson(PATH.PUBLISH_JSON, JSON.stringify(json)));
+
+            const projectID_index = userInfo.projects.indexOf(projectID)
+            if (projectID_index !== -1) {
+              userInfo.projects.splice(projectID_index, 1)
+            }
+
+            if (userInfo.name !== "admin") {
+              let arr = []
+              userInfo.projects.forEach(p => {
+                if (json.projects[p]) {
+                  arr.push(p)
+                }
+              })
+              json.projects = arr
+            }
+
             response.statusCode = 200;
             response.setHeader("Content-Type", "application/json");
-            response.end(json, "utf8");
+            response.end(JSON.stringify(json), "utf8");
           }).catch(() => {
             let json = JSON.parse(fileReader.getJson(PATH.PUBLISH_JSON));
-            delete json.projects[id];
-            json = fileReader.setJson(PATH.PUBLISH_JSON, JSON.stringify(json));
+            delete json.projects[projectID];
+            json = JSON.parse(fileReader.setJson(PATH.PUBLISH_JSON, JSON.stringify(json)));
+
+            const projectID_index = userInfo.projects.indexOf(projectID)
+            if (projectID_index !== -1) {
+              userInfo.projects.splice(projectID_index, 1)
+            }
+
+            if (userInfo.name !== "admin") {
+              let arr = []
+              userInfo.projects.forEach(p => {
+                if (json.projects[p]) {
+                  arr.push(p)
+                }
+              })
+              json.projects = arr
+            }
+
             response.statusCode = 200;
             response.setHeader("Content-Type", "application/json");
-            response.end(json, "utf8");
+            response.end(JSON.stringify(json), "utf8");
           })
         } catch (err) {
-          throw '删除的过程中出现了问题'
+          response.statusCode = 500;
+          response.end('服务器删除出问题', "utf8");
         }
       });
     } catch (err) {

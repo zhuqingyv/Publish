@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:54
- * @LastEditTime: 2020-08-31 15:16:44
+ * @LastEditTime: 2020-09-01 23:47:11
  * @LastEditors: zhuqingyu
  */
 global.PATH = require("./PATH/index.js"); // 通用目录
@@ -11,20 +11,20 @@ global.git = require(PATH.GIT);
 const server = require("./server/server.js");
 const killPort = require(PATH.KILL_PORT);
 const ServerJson = require('./server/server.json');
-const port = ServerJson.main.port
+const publish_port = ServerJson.publish.port;
 
 /*
  * 1.清理一下端口
  * 2.开启服务
  */
-killPort(port).then(() => {
+killPort(publish_port).then(() => {
   server
-    .init(port)
-    .then((e) => {
-      console.log(`Server on Port: => ${port}`);
+    .init(publish_port)
+    .then(() => {
+      console.log(`Server on Port: => ${publish_port}`);
     })
-    .catch((err) => {
-      console.log(`${port} is Error!`);
+    .catch(() => {
+      console.log(`${publish_port} is Error!`);
     });
 })
 
