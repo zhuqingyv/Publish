@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 20:32:32
+ * @LastEditTime: 2020-09-01 20:38:03
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -50,15 +50,6 @@ const publish = {
             }
             response.statusCode = 200;
             response.setHeader("Content-Type", type);
-            // if (ifFont) {
-            //   response.setHeader("Content-Type", 'text/plain');
-            //   response.setHeader("content-length", stringToBuffer(filedata).byteLength);
-            //   response.setHeader("accept-ranges", 'bytes');
-            //   response.setHeader('Content-Encoding', 'identity');
-            //   response.write(filedata, 'binary');
-            //   response.end();
-            //   return
-            // }
             response.write(filedata, ifMedia ? "binary" : "utf8");
             response.end();
           }
@@ -83,7 +74,7 @@ const publish = {
     allowHeader(response); //  处理跨域问题
 
     if (testOption(request, response)) return;
-
+    console.log(request.url, request.headers.host)
     try {
       getBody(request)
         .then((data, end) => {
@@ -189,7 +180,6 @@ const publish = {
     allowHeader(response); // 处理跨域
 
     if (testOption(request, response)) return; //  处理复杂请求
-    console.log(request.url, request.headers.host)
     try {
       getBody(request)
         .then((data) => {

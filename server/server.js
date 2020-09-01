@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 17:52:48
- * @LastEditTime: 2020-09-01 15:14:42
+ * @LastEditTime: 2020-09-01 20:36:27
  * @LastEditors: zhuqingyu
  */
 const http = require("http");
@@ -108,8 +108,6 @@ const server = {
                         api: sourceApi,
                         option: cell.option
                     }
-                } else {
-                    throw `API: '${sourceApi}' => '${item}' is undefined !`
                 }
             }
             return {
@@ -117,7 +115,6 @@ const server = {
                 option: cell.option
             }
         } catch (err) {
-            console.warn(err)
             return false
         }
     },
