@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-28 17:44:01
- * @LastEditTime: 2020-09-01 10:26:49
+ * @LastEditTime: 2020-09-01 22:56:35
  * @LastEditors: zhuqingyu
  */
 const child_process = require("child_process");
@@ -42,7 +42,7 @@ module.exports = function (ID, callback) {
                 end: false
             })
 
-            const running = child_process.spawn('npm', ['install'], {
+            const running = child_process.spawn('cnpm', ['install'], {
                 cwd: `${PATH.GITHUB_PATH}/${ID}/${project.gitName}`
             })
 
