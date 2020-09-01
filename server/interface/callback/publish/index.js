@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 03:28:07
+ * @LastEditTime: 2020-09-01 10:22:51
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -40,29 +40,36 @@ const publish = {
       const baseUrl = url.replace("/", "../../../../../Publish-View/dist/");
       // 资源绝对路径
       const _path = path.resolve(__dirname, baseUrl);
-
-      global._global.tools.fileReader.getJson(
-        _path,
-        ifMedia ? "binary" : "utf8",
-        (err, filedata) => {
-          if (err) {
-            throw err;
+      try {
+        global._global.tools.fileReader.getJson(
+          _path,
+          ifMedia ? "binary" : "utf8",
+          (err, filedata) => {
+            if (err) {
+              throw err;
+            }
+            response.statusCode = 200;
+            response.setHeader("Content-Type", type);
+            // if (ifFont) {
+            //   response.setHeader("Content-Type", 'text/plain');
+            //   response.setHeader("content-length", stringToBuffer(filedata).byteLength);
+            //   response.setHeader("accept-ranges", 'bytes');
+            //   response.setHeader('Content-Encoding', 'identity');
+            //   response.write(filedata, 'binary');
+            //   response.end();
+            //   return
+            // }
+            response.write(filedata, ifMedia ? "binary" : "utf8");
+            response.end();
           }
-          response.statusCode = 200;
-          response.setHeader("Content-Type", type);
-          // if (ifFont) {
-          //   response.setHeader("Content-Type", 'text/plain');
-          //   response.setHeader("content-length", stringToBuffer(filedata).byteLength);
-          //   response.setHeader("accept-ranges", 'bytes');
-          //   response.setHeader('Content-Encoding', 'identity');
-          //   response.write(filedata, 'binary');
-          //   response.end();
-          //   return
-          // }
-          response.write(filedata, ifMedia ? "binary" : "utf8");
-          response.end();
-        }
-      );
+        );
+      } catch (err) {
+        response.statusCode = 404;
+        response.setHeader("Content-Type", "text/xml");
+        response.end();
+        console.log(err);
+      }
+
     } catch (err) {
       response.statusCode = 500;
       response.setHeader("Content-Type", "text/xml");
@@ -346,8 +353,8 @@ const publish = {
   ) {
     // wss: 最外层管理socketServer ws:当前分配的对象
     try {
-      if (data.heartBeat) return;
       const message = JSON.parse(data);
+      if (message.heartBeat) return;
       const projectID = message.projectID;
       const token = message.token;
       const userSocketID = message.socketID;

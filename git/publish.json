@@ -1,13 +1,1 @@
-{
-	"projects": {
-		"f43508e9-c1dc-4d67-873e-193193923a61_1": {
-			"id": "f43508e9-c1dc-4d67-873e-193193923a61_1",
-			"name": "1",
-			"gitName": "Publish-View",
-			"version": "0.1.0",
-			"description": "没有描述",
-			"url": " https://github.com/zhuqingyv/Publish-View.git",
-			"port": 8082
-		}
-	}
-}
+{"projects":{}}

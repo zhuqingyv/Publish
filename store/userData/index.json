@@ -1,14 +1,1 @@
-{
-    "userPool": {
-        "admin": {
-            "passWord": "5711663123",
-            "priKey": "",
-            "token": "",
-            "authorization": "*",
-            "projects": [],
-            "name": "admin",
-            "uuid": 1598901849895,
-            "time": 1598905449916
-        }
-    }
-}
+{"userPool":{"admin":{"passWord":"5711663123","priKey":"","token":"","authorization":"*","projects":["0178767d-206a-4445-a459-45df70419408_Publish-View"],"name":"admin","uuid":1598929172849,"time":1598932772860}}}

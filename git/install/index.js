@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-28 17:44:01
- * @LastEditTime: 2020-08-29 22:42:11
+ * @LastEditTime: 2020-09-01 10:26:49
  * @LastEditors: zhuqingyu
  */
 const child_process = require("child_process");
@@ -19,7 +19,9 @@ module.exports = function (ID, callback) {
         child_process.exec(command, (err, stdout, stderr) => {
             if (err) {
                 callback({
-                    err
+                    info: '项目文件已经移除',
+                    type: 'warn',
+                    end: true
                 })
                 return
             }

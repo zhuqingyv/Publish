@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-14 18:40:07
- * @LastEditTime: 2020-08-29 18:12:50
+ * @LastEditTime: 2020-09-01 10:08:08
  * @LastEditors: zhuqingyu
  */
 const fs = require("fs");
@@ -25,7 +25,7 @@ const fileReader = {
     try {
       return fs.readFileSync(path, code);
     } catch (err) {
-      throw err;
+      return null;
     }
   },
   // 写入
@@ -37,7 +37,7 @@ const fileReader = {
       fs.writeFileSync(path, newValue);
       return newValue;
     } catch (err) {
-      throw err;
+      return null;
     }
   },
   // 打开
@@ -61,7 +61,7 @@ const fileReader = {
     try {
       return fs.statSync(path);
     } catch (err) {
-      throw err;
+      return null
     }
   },
 };
