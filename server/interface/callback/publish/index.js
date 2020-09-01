@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 20:38:03
+ * @LastEditTime: 2020-09-01 23:02:40
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -278,13 +278,20 @@ const publish = {
           if (!canDo) throw '没有权限操作此项目'
 
           setFolder.delete(hubURL).then(() => {
-            let json = require(PATH.PUBLISH_JSON);
+            let json = JSON.parse(fileReader.getJson(PATH.PUBLISH_JSON));
             delete json.projects[id];
             json = fileReader.setJson(PATH.PUBLISH_JSON, JSON.stringify(json));
             response.statusCode = 200;
             response.setHeader("Content-Type", "application/json");
             response.end(json, "utf8");
-          });
+          }).catch(() => {
+            let json = JSON.parse(fileReader.getJson(PATH.PUBLISH_JSON));
+            delete json.projects[id];
+            json = fileReader.setJson(PATH.PUBLISH_JSON, JSON.stringify(json));
+            response.statusCode = 200;
+            response.setHeader("Content-Type", "application/json");
+            response.end(json, "utf8");
+          })
         } catch (err) {
           throw '删除的过程中出现了问题'
         }
