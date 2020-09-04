@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-01 23:43:44
+ * @LastEditTime: 2020-09-04 16:18:38
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -19,6 +19,8 @@ const git = require(PATH.GIT);
 const fileReader = require(PATH.FILEREADER_PATH);
 const crypto = require(PATH.CRYPTO_PATH); // 加密/解密/生成token 模块
 const outTime = 1000 * 60 * 60; // 60分钟
+
+const desktopAPI = require("./desktop/index.js")
 
 const publish = {
   // 发布代码页面UI接口
@@ -567,5 +569,6 @@ const publish = {
       ws.close(1007, '打包失败')
     }
   },
+  "/publish/Desktop": desktopAPI
 };
 module.exports = publish;

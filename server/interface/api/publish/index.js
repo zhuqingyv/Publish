@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:17:03
- * @LastEditTime: 2020-08-31 15:36:29
+ * @LastEditTime: 2020-09-04 16:14:58
  * @LastEditors: zhuqingyu
  */
 const publish = {
@@ -46,7 +46,8 @@ const publish = {
                 option: {}
             }
         }
-    } // 发布页主页
+    }, // 发布页主页
+    'Desktop': {}
 }
 module.exports = {
     publish
