@@ -1,1 +1,13 @@
-{"projects":{}}
+{
+	"projects": {
+		"cf08f7c1-ca83-4c7b-bce8-f5bc1a584082_Publish-View": {
+			"id": "cf08f7c1-ca83-4c7b-bce8-f5bc1a584082_Publish-View",
+			"name": "Publish-View",
+			"gitName": "Publish-View",
+			"version": "0.1.0",
+			"description": "没有描述",
+			"url": "https://github.com/zhuqingyv/Publish-View.git",
+			"port": 8082
+		}
+	}
+}

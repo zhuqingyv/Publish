@@ -1,19 +1,19 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-31 14:08:50
- * @LastEditTime: 2020-08-31 18:22:15
+ * @LastEditTime: 2020-09-04 17:04:19
  * @LastEditors: zhuqingyu
  */
 const child_process = require("child_process");
-const setFolder = require(PATH.SET_FOLDER);
-const fileReader = require(PATH.FILEREADER_PATH);
+const setFolder = require(PATH.TOOLS.SET_FOLDER);
+const fileReader = require(PATH.TOOLS.FILEREADER);
 const getPort = require(PATH.TOOLS.GET_PORT);
-const killPort = require(PATH.KILL_PORT);
+const killPort = require(PATH.TOOLS.KILL_PORT);
 
 module.exports = function (projectID, callback) {
     let project
     try {
-        project = JSON.parse(fileReader.getJson(`${PATH.PUBLISH_JSON}`)).projects[projectID]
+        project = JSON.parse(fileReader.getJson(`${PATH.JSON.PUBLISH}`)).projects[projectID]
     } catch (err) {
         callback({
             info: '项目不存在！',
@@ -40,10 +40,10 @@ module.exports = function (projectID, callback) {
                     port
                 })
                 // 修改项目记录数据
-                const json = JSON.parse(fileReader.getJson(PATH.PUBLISH_JSON));
+                const json = JSON.parse(fileReader.getJson(PATH.JSON.PUBLISH));
                 project.port = port
                 json.projects[projectID] = project
-                fileReader.setJson(PATH.PUBLISH_JSON, JSON.stringify(json, null, '\t'))
+                fileReader.setJson(PATH.JSON.PUBLISH, JSON.stringify(json, null, '\t'))
 
                 const running = child_process.spawn('http-server', ['-p', port], {
                     cwd: `${projectPath}/dist`
@@ -121,10 +121,10 @@ module.exports = function (projectID, callback) {
                             port
                         })
                         // 修改项目记录数据
-                        const json = JSON.parse(fileReader.getJson(PATH.PUBLISH_JSON));
+                        const json = JSON.parse(fileReader.getJson(PATH.JSON.PUBLISH));
                         project.port = port
                         json.projects[projectID] = project
-                        fileReader.setJson(PATH.PUBLISH_JSON, JSON.stringify(json, null, '\t'))
+                        fileReader.setJson(PATH.JSON.PUBLISH, JSON.stringify(json, null, '\t'))
 
                         const running = child_process.spawn(`http-server`, ['-p', port], {
                             cwd: `${projectPath}`

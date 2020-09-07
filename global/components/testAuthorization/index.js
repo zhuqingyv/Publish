@@ -1,12 +1,12 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-09-01 15:18:15
- * @LastEditTime: 2020-09-01 23:16:19
+ * @LastEditTime: 2020-09-04 16:54:37
  * @LastEditors: zhuqingyu
  */
 const rule = require("./user.js");
 const getBody = require(PATH.COMPONENTS.GET_BODY);
-const crypto = require(PATH.CRYPTO_PATH);
+const crypto = require(PATH.TOOLS.CRYPTO);
 module.exports = async function (request, api) {
     if (request.method.toLowerCase() == 'options') return true
     let body = {}

@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:36:56
- * @LastEditTime: 2020-08-31 18:55:34
+ * @LastEditTime: 2020-09-04 17:00:09
  * @LastEditors: zhuqingyu
  */
 const exec = require("child_process").exec;
@@ -62,9 +62,9 @@ module.exports = function (gitHttps, _name, _userToken, callback) {
       // 克隆结束
       running.stdout.on("end", (error) => {
         if (!callback) return;
-        let message = error
-          ? error.toString()
-          : `【${json.gitName}】安装完毕！`;
+        let message = error ?
+          error.toString() :
+          `【${json.gitName}】安装完毕！`;
 
         // github 名称
         const baseName = json.gitName;
@@ -95,13 +95,13 @@ module.exports = function (gitHttps, _name, _userToken, callback) {
         // 修改 publishJson
         global._global.components.publishJson.add(json).then((publishJson) => {
           const userData = JSON.parse(
-            global._global.tools.fileReader.getJson(PATH.USERDATA_PATH, "utf8")
+            global._global.tools.fileReader.getJson(PATH.JSON.USERDATA, "utf8")
           );
           const projects = [];
           publishJson = JSON.parse(publishJson);
           userData.userPool[userName].projects.push(json.id);
           global._global.tools.fileReader.setJson(
-            PATH.USERDATA_PATH,
+            PATH.JSON.USERDATA,
             JSON.stringify(userData)
           );
           userData.userPool[userName].projects.forEach((projectID) => {

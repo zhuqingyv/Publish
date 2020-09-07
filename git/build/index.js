@@ -1,15 +1,15 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:36:51
- * @LastEditTime: 2020-08-31 17:59:49
+ * @LastEditTime: 2020-09-04 17:04:07
  * @LastEditors: zhuqingyu
  */
 const child_process = require("child_process");
-const fileReader = require(PATH.FILEREADER_PATH);
+const fileReader = require(PATH.TOOLS.FILEREADER);
 
 module.exports = function (ID, callback) {
 
-  const project = JSON.parse(fileReader.getJson(`${PATH.PUBLISH_JSON}`))
+  const project = JSON.parse(fileReader.getJson(`${PATH.JSON.PUBLISH}`))
     .projects[ID]; // 项目信息
 
   // 如果项目不存在

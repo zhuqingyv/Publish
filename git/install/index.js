@@ -1,16 +1,16 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-28 17:44:01
- * @LastEditTime: 2020-09-01 22:56:35
+ * @LastEditTime: 2020-09-04 17:04:26
  * @LastEditors: zhuqingyu
  */
 const child_process = require("child_process");
-const fileReader = require(PATH.FILEREADER_PATH);
+const fileReader = require(PATH.TOOLS.FILEREADER);
 
 module.exports = function (ID, callback) {
 
     try {
-        const project = JSON.parse(fileReader.getJson(`${PATH.PUBLISH_JSON}`))
+        const project = JSON.parse(fileReader.getJson(`${PATH.JSON.PUBLISH}`))
             .projects[ID]; // 项目信息
         const command = `cd ${PATH.GITHUB_PATH}/${ID}/${project.gitName}`;
 
