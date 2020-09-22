@@ -1,11 +1,9 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-24 18:00:14
- * @LastEditTime: 2020-09-07 14:03:54
+ * @LastEditTime: 2020-09-22 10:28:00
  * @LastEditors: zhuqingyu
  */
-
-const git = require(PATH.GIT);
 
 const publish = {
   // 发布代码页面UI接口
