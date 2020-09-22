@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "node inspect index.js",
+    "start:fz": "node index.js",
+    "start": "forever -o out.log -e err.log index.js"
   },
   "author": "",
   "license": "ISC",

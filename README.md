@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-09-01 15:45:03
+ * @LastEditTime: 2020-09-22 11:08:13
  * @LastEditors: zhuqingyu
 -->
 
@@ -9,8 +9,22 @@
 
 ## 启动
 
+生产环境
+
 ```linux
-forever -o out.log -e err.log index.js
+npm run start
+```
+
+测试环境
+
+```linux
+npm run start:fz
+```
+
+开发环境
+
+```linux
+npm run start:dev
 ```
 
 ## 测试账号
