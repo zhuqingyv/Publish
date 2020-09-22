@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-26 22:16:16
- * @LastEditTime: 2020-09-07 14:13:00
+ * @LastEditTime: 2020-09-22 11:20:48
  * @LastEditors: zhuqingyu
  */
 const path = require("path");
@@ -16,12 +16,12 @@ const PATH = {
         STRING_TO_BUFFER: path.resolve(__dirname, "../global/tools/stringToBuffer/index.js")
     },
     COMPONENTS: {
-        GET_BODY: path.resolve(__dirname, "../global/components/getBody/index.js"),
-        TEST_AUTHORIZATION: path.resolve(__dirname, "../global/components/testAuthorization/index.js"),
-        TEST_OPTION: path.resolve(__dirname, "../global/components/testOption/index.js"),
-        TEST_TOKEN: path.resolve(__dirname, "../global/components/testToken/index.js"),
-        CONTENT_TYPE: path.resolve(__dirname, "../global/components/contentType/index.js"),
-        ALLOW_HEADER: path.resolve(__dirname, "../global/components/allowHeader/index.js")
+        GET_BODY: path.resolve(__dirname, "../global/components/getBody/index.js"), // 获取 request 的body
+        TEST_AUTHORIZATION: path.resolve(__dirname, "../global/components/testAuthorization/index.js"), // 检查 用户信息
+        TEST_OPTION: path.resolve(__dirname, "../global/components/testOption/index.js"), // 处理前端复杂请求
+        TEST_TOKEN: path.resolve(__dirname, "../global/components/testToken/index.js"), // 检查 token
+        CONTENT_TYPE: path.resolve(__dirname, "../global/components/contentType/index.js"), // content-type 字典
+        ALLOW_HEADER: path.resolve(__dirname, "../global/components/allowHeader/index.js") // 跨域临时 CORS 处理
     },
     JSON: {
         SERVER: path.resolve(__dirname, "../server/server.json"),
