@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-27 02:04:59
- * @LastEditTime: 2020-09-22 11:08:13
+ * @LastEditTime: 2020-09-22 11:15:29
  * @LastEditors: zhuqingyu
 -->
 
@@ -27,20 +27,21 @@ npm run start:fz
 npm run start:dev
 ```
 
+### [项目预览地址](http://publish.pianoboy.club:8082/)
+
 ## 测试账号
 
     登陆下面有一个游客登陆，不需要账号密码就可以一键登陆
     但是游客身份受限制，只能操作自己上传的项目
 
-    由于所有的 Http 请求都是手动处理的没有借助外部库比如 express 目前字体文件的解析还存在一些问题，有待解决，欢迎大佬前来提意见
+    由于所有的 Http 请求都是手动处理的没有借助外部库比如 express 目前字体文件的解析还存在一些问题，
+    有待解决，欢迎大佬前来提意见
 
 ## 备忘录
 
     git fetch --all
     git reset --hard origin/master
     git pull
-
-### [项目预览地址](http://publish.pianoboy.club:8082/)
 
 ## 功能
 
