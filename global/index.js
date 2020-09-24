@@ -1,7 +1,7 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-08-21 18:59:33
- * @LastEditTime: 2020-08-31 15:07:14
+ * @LastEditTime: 2020-09-22 17:57:47
  * @LastEditors: zhuqingyu
  */
 // 工具
@@ -11,6 +11,7 @@ const getPort = require('./tools/getPort/index.js');
 const StringToBuffer = require('./tools/stringToBuffer/index.js');
 const crypto = require('./tools/crypto/index.js');
 const killPort = require('./tools/killPort/index.js');
+const JsonProxy = require('./tools/jsonProxy/index.js');
 
 // 组件
 const publishJson = require('./components/PublishJson/index.js');
@@ -53,6 +54,7 @@ module.exports = {
         // 加密模块
         crypto,
         // 关闭某个端口
-        killPort
+        killPort,
+        JsonProxy
     }
 }
